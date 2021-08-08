@@ -9,7 +9,7 @@
         $ gcc main.c -c
         $ gcc myJpeg.o main.o -ljpeg -lpthread -o main.exe  
     実行
-        $ ./main.exe sample.jpg 10 10
+        $ ./main.exe sample.jpg 8 8
             第１引数：入力する JPEG ファイルへのパス
             第２引数：横方向の拡大率
             第３引数：縦方向の拡大率

@@ -1,12 +1,12 @@
-"パッケージのインストール"
+//必要なライブラリのインストール
 #include "myJpeg.h"
 #include <time.h>
 #include <pthread.h>
 
-"使用するスレッド数"
+//使用するスレッド数
 #define NUM_THREAD 4
 
-"スレッドで参照するデータ"
+//スレッドで参照するデータ
 struct thread_data{
   BITMAPDATA_t *output;
   BITMAPDATA_t *input;
@@ -20,7 +20,7 @@ struct thread_data{
 
 void *resize(void *arg);
 
-"スレッドの処理"
+//スレッドの処理
 void *resize(void *arg){
   int m, n, c;
   int m0, m1, n0, n1;
@@ -90,7 +90,7 @@ int main(int argc, char *argv[]){
     return -1;
   }
 
-  "拡大後画像のBITMAPデータ格納用のメモリ確保"
+  //拡大後画像のBITMAPデータ格納用のメモリ確保
   scaledBitmap.data = (unsigned char*)malloc(sizeof(unsigned char) * scaledBitmap.width * scaledBitmap.height * scaledBitmap.ch);
   if(scaledBitmap.data == NULL){
     printf("malloc scaledBitmap error\n");
@@ -98,7 +98,7 @@ int main(int argc, char *argv[]){
     return -1;
   }
 
-  "スレッドで参照するためのデータを格納"
+  //スレッドで参照するためのデータを格納
   for(n = 0; n < NUM_THREAD; n++){
     thdata[n].output = &scaledBitmap;
     thdata[n].input = &bitmap;
@@ -118,16 +118,16 @@ int main(int argc, char *argv[]){
     pthread_create(&thread[n], NULL, resize, &thdata[n]);
   }
 
-  "同期"
+  //同期
   for(n = 0; n < NUM_THREAD; n++){
     pthread_join(thread[n], NULL);
   }
 
-  "処理時間の計測"
+  //処理時間の計測
   end = time(NULL);
   printf("processing time:%ld[s]\n", end - start);
 
-  "画像の出力"
+  //画像の出力
   sprintf(outname, "%s", "result.jpeg");
   if(jpegFileEncodeWrite(&scaledBitmap, outname) == -1){
     printf("jpegFileEncodeWrite error\n");
