@@ -27,3 +27,6 @@
 
     myJpeg.c
         libjpeg を使用するための関数
+
+    myJpeg.h, myJpeg.cは以下サイトより引用した
+    https://daeudaeu.com/libjpeg/
